@@ -13,6 +13,7 @@ public:
     virtual void preorder() = 0;
     virtual void postorder() = 0;
     virtual Node *deleteValue(const int &value) = 0;
+    virtual int heightofTree() = 0;
 };
 
 Tree::Tree()

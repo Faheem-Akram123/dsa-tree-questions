@@ -5,6 +5,7 @@ class BST : public Tree
     void INORDER(Node *);
     void PREORDER(Node *);
     void POSTORDER(Node *);
+    int ht(Node *root);
 
 public:
     void insert(const int &value);
@@ -12,10 +13,30 @@ public:
     void preorder();
     void postorder();
     Node *deleteValue(const int &value);
+    int heightofTree();
+    Node *rootNode();
 };
 
+Node *BST::rootNode()
+{
+    return root;
+}
+
+int BST::ht(Node *root)
+{
+    if (root == nullptr)
+        return 0;
+
+    return max(ht(root->leftChild), ht(root->rightChild)) + 1;
+}
+
+int BST::heightofTree()
+{
+    return ht(root);
+}
+
 // Delete function without recursion
-Node *BST::deleteValue(const int& key)
+Node *BST::deleteValue(const int &key)
 {
     Node *parent = NULL;
     Node *curr = root;
