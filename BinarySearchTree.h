@@ -1,0 +1,245 @@
+#include "BinarySearch.h"
+
+template <class T>
+class BinarySearchTree : public BinaryTree<T>
+{
+    void INORDER(Node<T> *root) const;
+    void PREORDER(Node<T> *root) const;
+    void POSTORDER(Node<T> *root) const;
+
+public:
+    BinarySearchTree() : BinaryTree<T>() {}
+    BinarySearchTree(const BinarySearchTree &bt) : BinaryTree<T>(bt) {}
+    const BinarySearchTree &operator=(const BinarySearchTree &);
+    ~BinarySearchTree() {}
+    void insert(const T &value);
+    void remove(const T &value);
+    bool search(const T &value) const;
+    bool isEmpty() const;
+
+    void inorderDisplay() const;
+    void preorderDisplay() const;
+    void postorderDisplay() const;
+};
+
+template <class T>
+void BinarySearchTree<T>::INORDER(Node<T> *root) const
+{
+    if (root == nullptr)
+        return;
+
+    INORDER(root->left);
+    cout << root->data << " ";
+    INORDER(root->right);
+}
+
+template <class T>
+void BinarySearchTree<T>::PREORDER(Node<T> *root) const
+{
+    if (root == nullptr)
+        return;
+
+    cout << root->data << " ";
+    PREORDER(root->left);
+    PREORDER(root->right);
+}
+
+template <class T>
+void BinarySearchTree<T>::POSTORDER(Node<T> *root) const
+{
+    if (root == nullptr)
+        return;
+
+    POSTORDER(root->left);
+    POSTORDER(root->right);
+    cout << root->data << " ";
+}
+
+template <class T>
+void BinarySearchTree<T>::inorderDisplay() const
+{
+    if (isEmpty())
+    {
+        cout << "Tree is Empty" << endl;
+    }
+    else
+    {
+        INORDER(this->root);
+    }
+}
+
+template <class T>
+void BinarySearchTree<T>::preorderDisplay() const
+{
+    if (isEmpty())
+    {
+        cout << "Tree is Empty" << endl;
+    }
+    else
+    {
+        PREORDER(this->root);
+    }
+}
+
+template <class T>
+void BinarySearchTree<T>::postorderDisplay() const
+{
+    if (isEmpty())
+    {
+        cout << "Tree is Empty" << endl;
+    }
+    else
+    {
+        POSTORDER(this->root);
+    }
+}
+
+template <class T>
+bool BinarySearchTree<T>::isEmpty() const
+{
+    return this->root == nullptr;
+}
+
+template <class T>
+void BinarySearchTree<T>::insert(const T &value)
+{
+    Node<T> *nn = new Node<T>;
+    nn->data = value;
+    nn->left = nullptr;
+    nn->right = nullptr;
+
+    if (isEmpty())
+    {
+        this->root = nn;
+        return;
+    }
+
+    Node<T> *p = this->root;
+    while (true)
+    {
+        if (value < p->data)
+        {
+            if (p->left == nullptr)
+            {
+                p->left = nn;
+                break;
+            }
+            p = p->left;
+        }
+        else
+        {
+            if (p->right == nullptr)
+            {
+                p->right = nn;
+                break;
+            }
+            p = p->right;
+        }
+    }
+}
+
+template <class T>
+bool BinarySearchTree<T>::search(const T &value) const
+{
+    if (isEmpty())
+    {
+        cout << "Tree is empty " << endl;
+        return false;
+    }
+
+    Node<T> *p = this->root;
+    while (p != nullptr)
+    {
+        if (p->data == value)
+        {
+            return true;
+        }
+        else
+        {
+            if (value < p->data)
+            {
+                p = p->left;
+            }
+            else
+            {
+                p = p->right;
+            }
+        }
+    }
+    return false;
+}
+
+template <class T>
+void BinarySearchTree<T>::remove(const T &value)
+{
+    if (isEmpty())
+    {
+        cout << "Tree is empty" << endl;
+        return;
+    }
+
+    Node<T> *parent = nullptr;
+    Node<T> *curr = this->root;
+
+    while (curr != nullptr && curr->data != value)
+    {
+        parent = curr;
+
+        if (value < curr->data)
+            curr = curr->left;
+        else
+            curr = curr->right;
+    }
+
+    if (curr == nullptr)
+    {
+        cout << "Value not found" << endl;
+        return;
+    }
+
+    if (curr->left == nullptr || curr->right == nullptr)
+    {
+        Node<T> *child;
+
+        if (curr->left != nullptr)
+            child = curr->left;
+        else
+            child = curr->right;
+
+        if (parent == nullptr)
+        {
+            this->root = child;
+        }
+        else if (parent->left == curr)
+        {
+            parent->left = child;
+        }
+        else
+        {
+            parent->right = child;
+        }
+
+        delete curr;
+    }
+
+    else
+    {
+        Node<T> *succParent = curr;
+        Node<T> *succ = curr->right;
+
+        while (succ->left != nullptr)
+        {
+            succParent = succ;
+            succ = succ->left;
+        }
+
+        curr->data = succ->data;
+
+        if (succParent->left == succ)
+            succParent->left = succ->right;
+        else
+            succParent->right = succ->right;
+
+        delete succ;
+    }
+}

@@ -1,44 +1,52 @@
-#include "bst.h"
-
-bool helper(Node *root1, Node *root2)
-{
-    if (root1 == nullptr && root2 == nullptr)
-        return true;
-
-    if (root1 == nullptr || root2 == nullptr)
-        return false;
-
-    return (root1 == root2 &&
-            root1->leftChild == root2->leftChild &&
-            root1->rightChild == root2->rightChild);
-}
-
-bool isIdentical(BST *t1, BST *t2)
-{
-    return helper(t1->rootNode(), t2->rootNode());
-}
+#include "BinarySearchTree.h"
 
 int main()
 {
-    BST obj;
-    obj.insert(500);
-    obj.insert(250);
-    obj.insert(750);
-    obj.insert(100);
-    obj.insert(200);
-    obj.insert(1000);
-    obj.insert(800);
-    obj.insert(600);
+    BinarySearchTree<int> bst;
 
-    BST obj1;
-    obj1.insert(500);
-    obj1.insert(250);
-    obj1.insert(750);
-    obj1.insert(100);
-    obj1.insert(200);
-    obj1.insert(1000);
-    obj1.insert(800);
-    obj1.insert(600);
+    cout << "Inserting values...\n";
+    bst.insert(50);
+    bst.insert(30);
+    bst.insert(70);
+    bst.insert(20);
+    bst.insert(40);
+    bst.insert(60);
+    bst.insert(80);
 
-    cout << isIdentical(&obj, &obj1) << endl;
+    cout << "\nInorder (should be sorted): ";
+    bst.inorderDisplay();
+    cout << endl;
+
+    cout << "Preorder: ";
+    bst.preorderDisplay();
+    cout << endl;
+
+    cout << "Postorder: ";
+    bst.postorderDisplay();
+    cout << endl;
+
+    cout << "\nSearch tests:\n";
+    cout << "Search 40: " << (bst.search(40) ? "Found" : "Not Found") << endl;
+    cout << "Search 100: " << (bst.search(100) ? "Found" : "Not Found") << endl;
+
+    cout << "\nTree properties:\n";
+    cout << "Height: " << bst.treeHeight() << endl;
+    cout << "Total nodes: " << bst.treeNodeCount() << endl;
+    cout << "Leaf nodes: " << bst.treeLeavesCount() << endl;
+
+    cout << "\nRemoving 30...\n";
+    bst.remove(30);
+
+    cout << "Inorder after deletion: ";
+    bst.inorderDisplay();
+    cout << endl;
+
+    cout << "\nRemoving 50 (root)...\n";
+    bst.remove(50);
+
+    cout << "Inorder after root deletion: ";
+    bst.inorderDisplay();
+    cout << endl;
+
+    return 0;
 }
