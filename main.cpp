@@ -3,6 +3,7 @@
 int main()
 {
     BinarySearchTree<int> bst;
+    myLL<int> LL;
 
     cout << "Inserting values...\n";
     bst.insert(15);
@@ -53,8 +54,9 @@ int main()
     // cout << endl;
     // bst.inorderDisplay();
 
-    cout << "single parent nodes are : " << bst.singleParent() << endl;
-    
+    // cout << "single parent nodes are : " << bst.singleParent() << endl;
+    bst.convert2List(LL);
+    LL.display();
 
     return 0;
 }

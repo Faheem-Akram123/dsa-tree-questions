@@ -9,6 +9,8 @@ class BinarySearchTree : public BinaryTree<T>
     void swapSubT(Node<T> *root);
     int sinParent(Node<T> *root);
 
+    void C2L(Node<T> *root, myLL<T> &LL);
+
 public:
     BinarySearchTree() : BinaryTree<T>() {}
     BinarySearchTree(const BinarySearchTree &bt) : BinaryTree<T>(bt) {}
@@ -26,12 +28,27 @@ public:
     void swapSubTrees();
     int singleParent();
 
-    void convert2List(myLL<T> LL);
+    void convert2List(myLL<T> &LL);
 };
 
 template <class T>
-void BinarySearchTree<T>::convert2List(myLL<T> LL)
+void BinarySearchTree<T>::C2L(Node<T> *root, myLL<T> &LL)
 {
+    if (root == nullptr)
+        return;
+
+    C2L(root->left, LL);
+    LL.insertAtTail(root->data);
+    C2L(root->right, LL);
+}
+
+template <class T>
+void BinarySearchTree<T>::convert2List(myLL<T> &LL)
+{
+    if (this->root == nullptr)
+        return;
+
+    C2L(this->root, LL);
 }
 
 template <class T>

@@ -33,10 +33,8 @@ public:
   int treeLeavesCount() const; // Returns the number of leaves in the binary tree
   virtual void swapSubTrees() = 0;
   virtual int singleParent() = 0;
-  virtual convert2List(myLL<T> LL) = 0;
+  virtual void convert2List(myLL<T> &LL) = 0;
 };
-
-
 
 template <class T>
 const BinaryTree<T> &BinaryTree<T>::operator=(const BinaryTree<T> &bt)
