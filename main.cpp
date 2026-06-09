@@ -3,7 +3,11 @@
 int main()
 {
     BinarySearchTree<int> bst;
-    myLL<int> LL;
+    BinarySearchTree<int> subTree;
+    
+    // BinarySearchTree<int> leftTree;
+    // BinarySearchTree<int> rightTree;
+    // myLL<int> LL;
 
     cout << "Inserting values...\n";
     bst.insert(15);
@@ -12,7 +16,8 @@ int main()
     bst.insert(12);
     bst.insert(13);
     bst.insert(14);
-    bst.insert(11);
+    bst.insert(19);
+    bst.insert(25);
 
     // cout << "\nInorder (should be sorted): ";
     // bst.inorderDisplay();
@@ -55,8 +60,17 @@ int main()
     // bst.inorderDisplay();
 
     // cout << "single parent nodes are : " << bst.singleParent() << endl;
-    bst.convert2List(LL);
-    LL.display();
+    // bst.convert2List(LL);
+    // LL.display();
+
+    // bst.split(leftTree, rightTree);
+
+    // leftTree.inorderDisplay();
+    // cout << endl;
+    // rightTree.inorderDisplay();
+
+    bst.subTreeFromValue(subTree,15);
+    subTree.inorderDisplay();
 
     return 0;
 }

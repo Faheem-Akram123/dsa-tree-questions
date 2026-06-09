@@ -10,6 +10,7 @@ class BinarySearchTree : public BinaryTree<T>
     int sinParent(Node<T> *root);
 
     void C2L(Node<T> *root, myLL<T> &LL);
+    void subTree(Node<T> *root, Node<T> *&Lroot, Node<T> *&Rnode);
 
 public:
     BinarySearchTree() : BinaryTree<T>() {}
@@ -29,7 +30,70 @@ public:
     int singleParent();
 
     void convert2List(myLL<T> &LL);
+    void split(BinarySearchTree<T> &lt, BinarySearchTree<T> &rt);
+    void subTreeFromValue(BinarySearchTree<T> &sbT, const int &value);
 };
+
+template <class T>
+void BinarySearchTree<T>::subTreeFromValue(BinarySearchTree<T> &sbT, const int &value)
+{
+    if (isEmpty())
+    {
+        cout << "Tree is empty " << endl;
+        return;
+    }
+
+    Node<T> *p = this->root;
+    while (p != nullptr)
+    {
+        if (p->data == value)
+        {
+            sbT.root = this->copyNodes(p);
+            return;
+        }
+        else
+        {
+            if (value < p->data)
+            {
+                p = p->left;
+            }
+            else
+            {
+                p = p->right;
+            }
+        }
+    }
+    return;
+}
+
+template <class T>
+void BinarySearchTree<T>::subTree(Node<T> *root, Node<T> *&Lroot, Node<T> *&Rroot)
+{
+    if (root == nullptr)
+    {
+        Lroot = nullptr;
+        Rroot = nullptr;
+        return;
+    }
+
+    Lroot = root->left;
+    Rroot = root->right;
+
+    root->left = nullptr;
+    root->right = nullptr;
+}
+
+template <class T>
+void BinarySearchTree<T>::split(BinarySearchTree<T> &lt, BinarySearchTree<T> &rt)
+{
+    if (this->root == nullptr)
+    {
+        cout << "Tree is empty" << endl;
+        return;
+    }
+
+    subTree(this->root, lt.root, rt.root);
+}
 
 template <class T>
 void BinarySearchTree<T>::C2L(Node<T> *root, myLL<T> &LL)
