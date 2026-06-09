@@ -2,22 +2,22 @@
 
 int main()
 {
-    BinarySearchTree<int> bst;
-    BinarySearchTree<int> subTree;
-    
+    BinarySearchTree<string> bst;
+    // BinarySearchTree<int> subTree;
+
     // BinarySearchTree<int> leftTree;
     // BinarySearchTree<int> rightTree;
     // myLL<int> LL;
 
-    cout << "Inserting values...\n";
-    bst.insert(15);
-    bst.insert(20);
-    bst.insert(10);
-    bst.insert(12);
-    bst.insert(13);
-    bst.insert(14);
-    bst.insert(19);
-    bst.insert(25);
+    // cout << "Inserting values...\n";
+    // bst.insert(15);
+    // bst.insert(20);
+    // bst.insert(10);
+    // bst.insert(12);
+    // bst.insert(13);
+    // bst.insert(14);
+    // bst.insert(19);
+    // bst.insert(25);
 
     // cout << "\nInorder (should be sorted): ";
     // bst.inorderDisplay();
@@ -69,8 +69,46 @@ int main()
     // cout << endl;
     // rightTree.inorderDisplay();
 
-    bst.subTreeFromValue(subTree,15);
-    subTree.inorderDisplay();
+    // bst.subTreeFromValue(subTree,15);
+    // subTree.inorderDisplay();
+
+    ofstream out("text.txt");
+    ifstream read("words.txt");
+    if (read.is_open())
+    {
+        string word;
+        while (!read.eof())
+        {
+            read >> word;
+            bst.insert(word);
+        }
+    }
+    else
+    {
+        cout << "file not open" << endl;
+    }
+
+    if (out.is_open())
+    {
+        bst.writeToFile(out);
+    }
+    else
+    {
+        cout << "output file not open" << endl;
+    }
+
+    if (bst.search("programmings"))
+    {
+        cout << "value found" << endl;
+    }
+    else
+    {
+        cout << "not in file or tree" << endl;
+    }
+
+    bst.remove("programming");
+    bst.insert("Faheem");
+    bst.inorderDisplay();
 
     return 0;
 }

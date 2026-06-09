@@ -11,6 +11,7 @@ class BinarySearchTree : public BinaryTree<T>
 
     void C2L(Node<T> *root, myLL<T> &LL);
     void subTree(Node<T> *root, Node<T> *&Lroot, Node<T> *&Rnode);
+    void WTF(ofstream &out, Node<T> *root);
 
 public:
     BinarySearchTree() : BinaryTree<T>() {}
@@ -32,7 +33,32 @@ public:
     void convert2List(myLL<T> &LL);
     void split(BinarySearchTree<T> &lt, BinarySearchTree<T> &rt);
     void subTreeFromValue(BinarySearchTree<T> &sbT, const int &value);
+
+    void writeToFile(ofstream &out);
 };
+
+template <class T>
+void BinarySearchTree<T>::WTF(ofstream &out, Node<T> *root)
+{
+    if (root == nullptr)
+        return;
+
+    WTF(out, root->left);
+    out << root->data << " ";
+    WTF(out, root->right);
+}
+
+template <class T>
+void BinarySearchTree<T>::writeToFile(ofstream &out)
+{
+    if (this->root == nullptr)
+    {
+        cout << "Tree is empty" << endl;
+        return;
+    }
+
+    WTF(out, this->root);
+}
 
 template <class T>
 void BinarySearchTree<T>::subTreeFromValue(BinarySearchTree<T> &sbT, const int &value)
