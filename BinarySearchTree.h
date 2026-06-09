@@ -6,6 +6,8 @@ class BinarySearchTree : public BinaryTree<T>
     void INORDER(Node<T> *root) const;
     void PREORDER(Node<T> *root) const;
     void POSTORDER(Node<T> *root) const;
+    void swapSubT(Node<T> *root);
+    int sinParent(Node<T> *root);
 
 public:
     BinarySearchTree() : BinaryTree<T>() {}
@@ -20,7 +22,67 @@ public:
     void inorderDisplay() const;
     void preorderDisplay() const;
     void postorderDisplay() const;
+
+    void swapSubTrees();
+    int singleParent();
+
+    void convert2List(myLL<T> LL);
 };
+
+template <class T>
+void BinarySearchTree<T>::convert2List(myLL<T> LL)
+{
+}
+
+template <class T>
+int BinarySearchTree<T>::sinParent(Node<T> *root)
+{
+    if (root == nullptr)
+        return 0;
+
+    if (!root->left && root->right || root->left && !root->right)
+    {
+        return sinParent(root->left) + sinParent(root->right) + 1;
+    }
+    else
+    {
+        return sinParent(root->left) + sinParent(root->right);
+    }
+}
+
+template <class T>
+int BinarySearchTree<T>::singleParent()
+{
+    if (this->root == nullptr)
+        return 0;
+
+    return sinParent(this->root);
+}
+
+template <class T>
+void BinarySearchTree<T>::swapSubT(Node<T> *root)
+{
+    if (root == nullptr)
+        return;
+
+    Node<T> *temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+
+    swapSubT(root->right);
+    swapSubT(root->left);
+}
+
+template <class T>
+void BinarySearchTree<T>::swapSubTrees()
+{
+    if (this->root == nullptr)
+    {
+        cout << "Tree is empty" << endl;
+        return;
+    }
+    swapSubT(this->root);
+}
 
 template <class T>
 void BinarySearchTree<T>::INORDER(Node<T> *root) const

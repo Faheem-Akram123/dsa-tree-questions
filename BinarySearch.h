@@ -1,4 +1,5 @@
 #include "Node.h"
+#include "../DSA-headerFiles-using-Cpp/myLL.h"
 #include <iostream>
 using namespace std;
 
@@ -30,7 +31,12 @@ public:
   int treeHeight() const;      // Returns the height of the binary tree.
   int treeNodeCount() const;   // Returns the number of nodes in the binary tree.
   int treeLeavesCount() const; // Returns the number of leaves in the binary tree
+  virtual void swapSubTrees() = 0;
+  virtual int singleParent() = 0;
+  virtual convert2List(myLL<T> LL) = 0;
 };
+
+
 
 template <class T>
 const BinaryTree<T> &BinaryTree<T>::operator=(const BinaryTree<T> &bt)
@@ -113,18 +119,18 @@ void BinaryTree<T>::deleteTree()
 }
 
 template <class T>
-Node<T>* BinaryTree<T>::copyNodes(Node<T>* node)
+Node<T> *BinaryTree<T>::copyNodes(Node<T> *node)
 {
-    if (node == nullptr)
-        return nullptr;
+  if (node == nullptr)
+    return nullptr;
 
-    Node<T>* nn = new Node<T>;
-    nn->data = node->data;
+  Node<T> *nn = new Node<T>;
+  nn->data = node->data;
 
-    nn->left = copyNodes(node->left);
-    nn->right = copyNodes(node->right);
+  nn->left = copyNodes(node->left);
+  nn->right = copyNodes(node->right);
 
-    return nn;
+  return nn;
 }
 
 template <class T>
