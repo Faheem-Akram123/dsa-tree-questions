@@ -13,6 +13,9 @@ class BinarySearchTree : public BinaryTree<T>
     void subTree(Node<T> *root, Node<T> *&Lroot, Node<T> *&Rnode);
     void WTF(ofstream &out, Node<T> *root);
 
+    void sceov(Node<T> *root, int &es, int &os, int &oc, int &ec);
+    bool isbst(Node<T> *root);
+
 public:
     BinarySearchTree() : BinaryTree<T>() {}
     BinarySearchTree(const BinarySearchTree &bt) : BinaryTree<T>(bt) {}
@@ -35,7 +38,54 @@ public:
     void subTreeFromValue(BinarySearchTree<T> &sbT, const int &value);
 
     void writeToFile(ofstream &out);
+
+    void sumAndCountEOVs(int &esum, int &osum, int &ecount, int &ocount);
+
+    bool isBST();
 };
+// past paper questions
+template <class T>
+bool BinarySearchTree<T>::isbst(Node<T> *root)
+{
+}
+
+template <class T>
+bool BinarySearchTree<T>::isBST()
+{
+    if (this->root == nullptr)
+        return true;
+
+    return isbst(this->root);
+}
+
+template <class T>
+void BinarySearchTree<T>::sceov(Node<T> *root, int &es, int &os, int &oc, int &ec)
+{
+    if (root == nullptr)
+        return;
+
+    if (root->data % 2 == 0)
+    {
+        ec++;
+        es += root->data;
+    }
+    else
+    {
+        oc++;
+        os += root->data;
+    }
+    sceov(root->left, es, os, oc, ec);
+    sceov(root->right, es, os, oc, ec);
+}
+
+template <class T>
+void BinarySearchTree<T>::sumAndCountEOVs(int &esum, int &osum, int &ecount, int &ocount)
+{
+    if (this->root == nullptr)
+        return;
+
+    sceov(this->root, esum, osum, ocount, ecount);
+}
 
 template <class T>
 void BinarySearchTree<T>::WTF(ofstream &out, Node<T> *root)
